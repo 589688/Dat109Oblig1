@@ -31,6 +31,10 @@ public class Brikke {
     public int getRutenr() {
         return rutenr;
     }
+    
+    public void setRutenr(int rutenr) {
+    	this.rutenr = rutenr;
+    }
 
 
 

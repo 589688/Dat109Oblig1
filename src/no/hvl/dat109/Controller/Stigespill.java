@@ -4,50 +4,87 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
 public class Stigespill {
-    
-    private Terning terning;
-    private List<Brikke> brikker;
-    private Brett brett;
 
-    public Stigespill() {
-        brikker = new ArrayList<Brikke>(1);
-        Brikke nyBrikke = new Brikke("Bl√•");
-        brikker.add(nyBrikke);
+	private Terning terning;
+	private List<Brikke> brikker;
+//	private Brett brett;
 
-        terning = new Terning();
+	public Stigespill() {
+		brikker = new ArrayList<Brikke>(2);
+		Brikke nyBrikke = new Brikke("BlÂ");
+		Brikke nyBrikke1 = new Brikke("Gr¯nn");
+		brikker.add(nyBrikke);
+		brikker.add(nyBrikke1);
 
-        brett = new Brett(100);
-    }
+		terning = new Terning();
 
-    public void spill() {
-        boolean vunnet = false;
-        while (!vunnet) {
+//		brett = new Brett(100);
+	}
+	
+	/**
+	 * Spiller en runde i stigspillet
+	 */
 
-            for (Brikke brikke : brikker) {
-                trekk(brikke);
+	public void spill() {
+		boolean vunnet = false;
+		while (!vunnet) {
 
-                if (brikke.getRutenr() >= 100) {
-                    vunnet = true;
-                    System.out.println(brikke.getFarge() + " brikke vant!");
-                }
+			for (Brikke brikke : brikker) {
+				trekk(brikke);
 
-            }
-        }
-        
+				if (brikke.getRutenr() >= 100) {
+					vunnet = true;
+					System.out.println(brikke.getFarge() + " brikke vant!");
+				}
 
-        //for alle spillerne, gj√∏r trekk
-    }
+			}
+		}
 
-    private void trekk(Brikke brikke) {
+		// for alle spillerne, gj√∏r trekk
+	}
 
-        int verdi = terning.trill();
-        System.out.println(brikke.getFarge() + " brikke kastet terning: " + verdi);
+	private void trekk(Brikke brikke) {
+		
+		int antallseksere = 0;
+		int verdi = terning.trill();
+		
+		System.out.println(brikke.getFarge() + " brikke kastet terning: " + verdi);
+		brikke.flytt(verdi);
+		
+		System.out.println(brikke.getFarge() + " brikke LANDET P√Ö RUTE: [" + brikke.getRutenr() + "]");
 
-        brikke.flytt(verdi);
-        System.out.println(brikke.getFarge() + " brikke LANDET P√Ö RUTE: [" + brikke.getRutenr() + "]");
-    
-        
-    }
+		while (verdi == 6) {
+			antallseksere++;
+			
+			verdi = terning.trill();
+			
+			if (antallseksere == 3) {
+				System.out.println(brikke.getFarge() + " brikke starter pÂ start igjen");
+
+				brikke.setRutenr(1);
+			
+			} else {
+				System.out.println(brikke.getFarge() + " Triller pÂ nytt");
+				
+				System.out.println(brikke.getFarge() + " brikke kastet terning: " + verdi);
+				
+				brikke.flytt(verdi);
+				System.out.println(brikke.getFarge() + " brikke LANDET P√Ö RUTE: [" + brikke.getRutenr() + "]");
+             
+
+			}
+			
+
+			
+
+		}
+		
+		
+		
+		
+
+	}
 
 }
